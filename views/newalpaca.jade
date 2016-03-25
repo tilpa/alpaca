@@ -1,0 +1,38 @@
+extends layout
+
+block content
+  .jumbotron
+    h1= title
+  .col-md-6
+    form#formAddUser(name="adduser",method="post",action="/api/v1/alpaca/new")
+      .form-group
+        label Alpaca Name
+        input.form-control(type="text", placeholder="Alpaca Name", name="alpacaname" pattern="^[A-Z]+[a-zA-Z ]*" title="Must begin with a capital letter" required)
+      .form-group  
+        label Alpaca Type
+        select.form-control(placeholder="Huacaya", name="alpacatype")
+          option Huacaya
+          option Suri
+      .form-group  
+        label Alpaca Colour
+        select.form-control(placeholder="Colour Code", name="alpacacolour")
+          option W
+          option B
+          option LF
+          option MF
+          option DF
+          option LBR
+          option MBR
+          option DBR
+          option BB
+          option TB
+          option DSG
+          option MSG
+          option LSG
+          option DRG
+          option MRG
+          option LRG
+      button#btnSubmit.btn.btn-success(type="submit") submit
+  .col-md-6
+    img.img-responsive(src='images/alpaca-colours.jpg', alt='Alpaca Colour Chart')
+  

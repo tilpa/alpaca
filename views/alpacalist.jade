@@ -1,0 +1,34 @@
+extends layout
+
+block content
+  .jumbotron
+    h1.
+      #{title}
+      
+  table.table.table-hover
+    thead
+      tr
+        th #
+        | 
+        th Alpaca Name
+        | 
+        th Alpaca Type
+        | 
+        th Alpaca Colour
+        | 
+        th Delete
+    tbody
+      each alpaca, i in alpacalist
+        tr(id= alpaca.name)
+          td #{i+1}
+          | 
+          td #{alpaca.name}
+          |  
+          td #{alpaca.type}
+          | 
+          td #{alpaca.colour}
+          | 
+          td
+            button.btn.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
+          
+          
