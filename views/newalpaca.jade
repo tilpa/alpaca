@@ -14,6 +14,26 @@ block content
           option Huacaya
           option Suri
       .form-group  
+        label Alpaca Sex
+        select.form-control(placeholder="Female", name="alpacasex")
+          option Female
+          option Male
+          option Weather
+      .form-group
+        label Alpaca Date of Birth
+        #dobpicker.input-group.date
+          input.form-control(type='text' name="alpacadob")
+          span.input-group-addon
+            i.glyphicon.glyphicon-th
+      .form-group  
+        label Alpaca Status
+        select.form-control(placeholder="Active", name="alpacastatus")
+          option Active
+          option Inactive
+          option Dead
+          option Unregistered
+          option Other
+      .form-group  
         label Alpaca Colour
         select.form-control(placeholder="Colour Code", name="alpacacolour")
           option W

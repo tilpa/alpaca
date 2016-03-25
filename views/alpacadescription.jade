@@ -1,0 +1,24 @@
+extends layout
+
+block content
+  .jumbotron
+    h1.
+      #{title}
+      
+      each alpaca, i in alpacalist
+        span(id= alpaca.name)
+          span #{i+1}
+          | 
+          span #{alpaca.name}
+          |  
+          span #{alpaca.sex}
+          |  
+          span #{alpaca.type}
+          | 
+          span #{alpaca.colour}
+          | 
+          span #{alpaca.dob}
+          |
+          span #{alpaca.status}
+          
+          

@@ -12,11 +12,13 @@ block content
         | 
         th Alpaca Name
         | 
+        th Alpaca Sex
+        | 
         th Alpaca Type
         | 
         th Alpaca Colour
         | 
-        th Delete
+        th Options
     tbody
       each alpaca, i in alpacalist
         tr(id= alpaca.name)
@@ -24,11 +26,14 @@ block content
           | 
           td #{alpaca.name}
           |  
+          td #{alpaca.sex}
+          |  
           td #{alpaca.type}
           | 
           td #{alpaca.colour}
           | 
           td
             button.btn.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
+            button.btn.btn-info() More Info
           
           

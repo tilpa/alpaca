@@ -13,6 +13,9 @@ router.post('/alpaca/new', function(req, res) {
   // Get our form values. These rely on the "name" attributes
   var alpacaName = req.body.alpacaname;
   var alpacaType = req.body.alpacatype;
+  var alpacaSex = req.body.alpacasex;
+  var alpacaDob = req.body.alpacadob;
+  var alpacaStatus = req.body.alpacastatus;
   var alpacaColour = req.body.alpacacolour;
 
   // Set our collection
@@ -22,7 +25,11 @@ router.post('/alpaca/new', function(req, res) {
   collection.insert({
       "name" : alpacaName,
       "type" : alpacaType,
+      "sex" : alpacaSex,
+      "dob" : alpacaDob,
+      "status" : alpacaStatus,
       "colour" : alpacaColour,
+
   }, function (err, doc) {
       if (err) {
           // If it failed, return error
@@ -43,7 +50,7 @@ router.post('/alpaca/remove/:name', function(req, res) {
   collection.remove({"name": name },
     function (err, doc) {
       if (err) {
-        res.send("Nope, we suck.")
+        res.send("Not sending")
       }
       else {
         res.redirect("/alpacalist");

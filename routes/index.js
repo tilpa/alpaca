@@ -6,18 +6,25 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Alpacas!' });
 });
 
-/* GET Hello World page. */
-router.get('/helloworld', function(req, res) {
-    res.render('helloworld', { title: 'Hello, World!' });
-});
-
-/* GET Userlist page. */
+/* GET Alpacalist page. */
 router.get('/alpacalist', function(req, res) {
     var db = req.db;
     var collection = db.get('alpaca');
     collection.find({},{},function(e,data){
         res.render('alpacalist', {
             title: 'Alpaca List',
+            alpacalist: data
+        });
+    });
+});
+
+/* GET AlpacaDescription page. */
+router.get('/alpacadescription', function(req, res) {
+    var db = req.db;
+    var collection = db.get('alpaca');
+    collection.find({},{},function(e,data){
+        res.render('alpacadescription', {
+            title: 'Alpaca Description',
             alpacalist: data
         });
     });
