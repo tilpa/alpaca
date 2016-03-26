@@ -15,8 +15,9 @@ var ALPACA = {
         }
       }
     }
+  },
+
+  detailsAlpaca: function (name) {
+    window.location.href="/alpacadescription/" + name + "/";
   }
-
-  
-
 }

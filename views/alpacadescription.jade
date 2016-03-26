@@ -4,21 +4,38 @@ block content
   .jumbotron
     h1.
       #{title}
+  
+  each alpaca, i in alpacalist
+    if alpaca
+    
+    .col-md-3
+      .card   
+        .card-block
+          h2.card-title #{alpaca.name}
+          |     
+          h4.card-subtitle.text-muted
+            | #{alpaca.sex} - #{alpaca.type}
+        |   
+        img.card-img-top(data-src='...', alt=alpaca.name + ' image')
+        ul.list-group.list-group-flush
+          li.list-group-item #{alpaca.status}
+          |     
+          li.list-group-item #{alpaca.colour}
+          |     
+          li.list-group-item #{alpaca.dob}
+        |   
+        .card-block
+          a.card-link(href='#') Card link
+          |     
+          a.card-link(href='#') Another link
+
+    .col-md-6
+      ul.list-group
+        li.list-group-item.text-center #{alpaca.name}
       
-      each alpaca, i in alpacalist
-        span(id= alpaca.name)
-          span #{i+1}
-          | 
-          span #{alpaca.name}
-          |  
-          span #{alpaca.sex}
-          |  
-          span #{alpaca.type}
-          | 
-          span #{alpaca.colour}
-          | 
-          span #{alpaca.dob}
-          |
-          span #{alpaca.status}
-          
-          
+      
+    .col-md-3
+    |  Inbredness Numbers
+      
+  if alpacalist == ""
+    span No alpaca found

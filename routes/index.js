@@ -18,11 +18,12 @@ router.get('/alpacalist', function(req, res) {
     });
 });
 
-/* GET AlpacaDescription page. */
-router.get('/alpacadescription', function(req, res) {
+/* GET SINGLE AlpacaDescription page. */
+router.get('/alpacadescription/:name/', function(req, res) {
     var db = req.db;
+    var name = req.params.name;
     var collection = db.get('alpaca');
-    collection.find({},{},function(e,data){
+    collection.find({'name': name}, function(e,data){
         res.render('alpacadescription', {
             title: 'Alpaca Description',
             alpacalist: data
@@ -30,12 +31,12 @@ router.get('/alpacadescription', function(req, res) {
     });
 });
 
-/* GET New User page. */
+/* GET Test page. */
 router.get('/test', function(req, res) {
     res.render('test', { title: 'Test' });
 });
 
-/* GET New User page. */
+/* GET New Alpaca page. */
 router.get('/newalpaca', function(req, res) {
     res.render('newalpaca', { title: 'Add New Alpaca' });
 });

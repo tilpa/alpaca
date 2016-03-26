@@ -58,5 +58,21 @@ router.post('/alpaca/remove/:name', function(req, res) {
     });
 });
 
+router.post('/alpaca/details/:name', function(req, res) {
+  var db = req.db;
+  var name = req.params.name;
+
+  var collection = db.get('alpaca');
+  collection.find({"name" : name},
+    function (err, doc) {
+      if (err) {
+        res.send("Not Working")
+      }
+      else {
+        res.redirect("/alpacadescription")
+      }
+    })
+});
+
 
 module.exports = router;
