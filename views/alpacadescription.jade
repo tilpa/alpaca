@@ -8,34 +8,52 @@ block content
   each alpaca, i in alpacalist
     if alpaca
     
-    .col-md-3
-      .card   
-        .card-block
-          h2.card-title #{alpaca.name}
-          |     
-          h4.card-subtitle.text-muted
-            | #{alpaca.sex} - #{alpaca.type}
-        |   
-        img.card-img-top(data-src='...', alt=alpaca.name + ' image')
-        ul.list-group.list-group-flush
-          li.list-group-item #{alpaca.status}
-          |     
-          li.list-group-item #{alpaca.colour}
-          |     
-          li.list-group-item #{alpaca.dob}
-        |   
-        .card-block
-          a.card-link(href='#') Card link
-          |     
-          a.card-link(href='#') Another link
-
-    .col-md-6
-      ul.list-group
-        li.list-group-item.text-center #{alpaca.name}
+    .row
+      .col-md-3
+        .card   
+          .card-block
+            h2.card-title #{alpaca.name}
+            |     
+            h4.card-subtitle.text-muted
+              | #{alpaca.sex} - #{alpaca.type}
+          |   
+          //img.card-img-top(data-src='...', alt=alpaca.name + ' image')
+          ul.list-group.list-group-flush
+            li.list-group-item #{alpaca.status}
+            |     
+            li.list-group-item #{alpaca.colour}
+            |     
+            li.list-group-item #{alpaca.dob} #{moment(Date.now()).format('DD/MM/YYYY')}  #{moment(alpaca.dob).format('MM/DD/YYYY')}
+              //-var a = (moment(Date.now()).format('YYYY, MM, DD'));
+              //-var b = moment(alpaca.dob).format('YYYY, MM, DD'));
+              //-console.log(a.diff(b, years)) // 86400000
+          .card-block
+            a.btn.btn-primary(href='#') Card link
+            |     
+            a.btn.btn-primary(href='#') Another link
       
-      
-    .col-md-3
-    |  Inbredness Numbers
+       
+      .col-md-6
+        h2 Progeny
+       
+      .col-md-3
+        h2 Inbreding Numbers
+        
+    hr    
+        
+    .row
+      .col-md-12
+          .row
+            .col-md-12
+              ul.list-group
+                h3.text-center #{alpaca.name}
+          hr
+          .row
+            .col-md-6
+              .text-center Sire Name
+            .col.md-6 
+              .text-center Dam Name
+    hr
       
   if alpacalist == ""
     span No alpaca found
