@@ -5,6 +5,12 @@ block content
     h1= title
   .col-md-6
     form#formAddUser(name="adduser",method="post",action="/api/v1/alpaca/new")
+      .form-group  
+        label Herd
+        select.form-control(name="alpacaherd")
+          option Incan Treasure
+          option Flying Alpacas
+          option Natural Allure
       .form-group
         label Alpaca Name
         input.form-control(type="text", placeholder="Alpaca Name", name="alpacaname" pattern="^[A-Z]+[a-zA-Z ]*" title="Must begin with a capital letter" required)

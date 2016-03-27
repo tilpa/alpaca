@@ -11,6 +11,7 @@ router.post('/alpaca/new', function(req, res) {
   var db = req.db;
 
   // Get our form values. These rely on the "name" attributes
+  var alpacaHerd = req.body.alpacaherd;
   var alpacaName = req.body.alpacaname;
   var alpacaType = req.body.alpacatype;
   var alpacaSex = req.body.alpacasex;
@@ -23,6 +24,7 @@ router.post('/alpaca/new', function(req, res) {
 
   // Submit to the DB
   collection.insert({
+      "herd" : alpacaHerd,
       "name" : alpacaName,
       "type" : alpacaType,
       "sex" : alpacaSex,
