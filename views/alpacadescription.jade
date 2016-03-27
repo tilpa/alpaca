@@ -13,46 +13,93 @@ block content
         .card   
           .card-block
             h2.card-title #{alpaca.name}
-            |     
-            h4.card-subtitle.text-muted
-              | #{alpaca.sex} - #{alpaca.type}
-          |   
+            h4.card-subtitle.text-muted #{alpaca.herd} 
           //img.card-img-top(data-src='...', alt=alpaca.name + ' image')
           ul.list-group.list-group-flush
+            li.list-group-item #{alpaca.sex}
+            li.list-group-item #{alpaca.type}
             li.list-group-item #{alpaca.status}
-            |     
             li.list-group-item #{alpaca.colour}
-            |     
-            li.list-group-item #{alpaca.dob} #{moment(Date.now()).format('DD/MM/YYYY')}  #{moment(alpaca.dob).format('MM/DD/YYYY')}
-              //-var a = (moment(Date.now()).format('YYYY, MM, DD'));
-              //-var b = moment(alpaca.dob).format('YYYY, MM, DD'));
-              //-console.log(a.diff(b, years)) // 86400000
+            li.list-group-item 
+              - moment.locale('en-AU');
+              - var age = moment(alpaca.dob, "DD/MM/YYYY").fromNow(true);
+              | #{age} old
+              br
+              span.text-muted (#{alpaca.dob})
           .card-block
-            a.btn.btn-primary(href='#') Card link
-            |     
-            a.btn.btn-primary(href='#') Another link
+            button.btn.btn-primary(data-toggle="modal" data-target="#myModal") Update Record
+            //
+              .modal
+                .modal-dialog
+                  .modal-content
+                    .modal-header
+                      button.close(data-dismiss="modal")
+                      h4.modal-title Header
+                    .modal-body
+                      p Text Goes Here
+                    .modal-footer
+                      button.btn.btn-default(data-dismiss="modal")
+            a.btn.btn-primary(href='#') Set Relations
       
        
       .col-md-6
         h2 Progeny
        
       .col-md-3
-        h2 Inbreding Numbers
+        h2 Inbreeding Numbers
         
-    hr    
+    hr  
+    
+    .text-center
+        h1.text-muted Parentage
+        
+    hr
         
     .row
       .col-md-12
           .row
             .col-md-12
               ul.list-group
-                h3.text-center #{alpaca.name}
+                h2.text-center #{alpaca.herd} #{alpaca.name}
           hr
           .row
             .col-md-6
-              .text-center Sire Name
+              h3.text-center Herd Sire Name
             .col.md-6 
-              .text-center Dam Name
+              h3.text-center Herd Dam Name
+          hr
+          .row
+            .col-md-3
+              h4.text-center Sire's Sire Name
+            .col-md-3
+              h4.text-center Sire's Dam Name
+            .col-md-3
+              h4.text-center Dam's Sire Name
+            .col-md-3
+              h4.text-center Dam's Dam Name
+          hr
+          .row
+            .col-md-6
+              .row
+                .col-md-3 
+                  .text-center E
+                .col-md-3
+                  .text-center F
+                .col-md-3 
+                  .text-center G
+                .col-md-3 
+                  .text-center H
+            .col-md-6
+              .row
+                .col-md-3 
+                  .text-center A
+                .col-md-3 
+                  .text-center B
+                .col-md-3 
+                  .text-center C
+                .col-md-3 
+                  .text-center D
+          
     hr
       
   if alpacalist == ""
