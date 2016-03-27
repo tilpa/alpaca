@@ -16,6 +16,7 @@ var api = require('./routes/api');
 
 var app = express();
 app.locals.moment = require('moment');
+app.locals.ageCalculator = require("age-calculator");
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
