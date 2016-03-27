@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  .jumbotron
+    h1= title
+  .col-md-12  
+    form#formAddRelations(name="addrelations",method="post",action="/api/v1/alpaca/relations")
+      .form-group  
+        label Sire
+        select.form-control(type="text" name="sire")
+          each alpaca, i in alpacalist
+            if alpaca.sex == "Male"
+              option #{alpaca.herd} #{alpaca.name}
+      .form-group
+        label Dam
+        select.form-control(type="text" name="dam")
+          each alpaca, i in alpacalist
+            if alpaca.sex == "Female"
+              option #{alpaca.herd} #{alpaca.name}
+      button#btnSubmit.btn.btn-success(type="submit") submit
