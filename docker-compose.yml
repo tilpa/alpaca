@@ -16,7 +16,7 @@ services:
     working_dir: /code
     command: npm run docker-dev
     volumes:
-      - ./alpaca:/code/
+      - ./web:/code/
   db:
     image: mongo:latest
     environment:
