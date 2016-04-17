@@ -1,0 +1,53 @@
+version: '2'
+services:
+  web:
+    image: node:latest
+    networks:
+      - front
+      - back
+    depends_on:
+      - db
+    ports:
+      - "80:3000"
+    environment:
+      PORT: "3000"
+      SERVICE_NAME: web
+      SERVICE_TAGS: http, v1
+    working_dir: /code
+    command: npm run docker-dev
+    volumes:
+      - ./alpaca:/code/
+  db:
+    image: mongo:latest
+    environment:
+      SERVICE_NAME: db
+      SERVICE_TAGS: database, v1
+    expose:
+      - "27017"
+    networks:
+      - back
+  consul:
+    image: gliderlabs/consul-server:latest
+    environment:
+      SERVICE_NAME: consul
+      SERVICE_TAGS: service-discovery, v1
+    command: -bootstrap -ui
+    ports:
+      - "8500:8500"
+      - "8600:53/udp"
+    networks:
+      - back
+  registrator:
+    image: gliderlabs/registrator:latest
+    command: -internal consul://consul:8500
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock
+    networks:
+      - back
+    depends_on:
+      - consul
+networks:
+  front:
+    driver: bridge
+  back:
+    driver: bridge
