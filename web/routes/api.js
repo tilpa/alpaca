@@ -3,7 +3,7 @@ var router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.send('congratulations: you reached the api');
+  res.send({response: 'success, you reached the api.'});
 });
 
 router.post('/alpaca/new', function(req, res) {
