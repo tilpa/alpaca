@@ -1,16 +1,27 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/**
+* @Author: tilpa
+* @Date:   2016-04-16T13:26:03+10:00
+* @Last modified by:   nxtonic
+* @Last modified time: 2016-04-17T18:39:02+10:00
+*/
+
+'use strict';
+
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 // establish connection to db.
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://db/alpaca');
-var db = mongoose.connection;
+const mongoose = require('mongoose');
+var dbName = process.env.DATABASE_NAME || 'application';
+const db = mongoose.connection;
+mongoose.connect('mongodb://db/' + dbName);
 db.on('error', console.error.bind(console, 'connection error:'));
 
+// import routers
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
@@ -22,9 +33,7 @@ app.locals.ageCalculator = require("age-calculator");
 
 // configure view engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
-
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.set('view engine', 'pug');
 
 // configure general application middleware
 app.use(logger('dev'));
@@ -32,6 +41,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('json spaces', 2);
 
 // Make db accessible to router
 app.use(function(req,res,next){
@@ -39,6 +49,7 @@ app.use(function(req,res,next){
     next();
 });
 
+// attach routers to application
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api/v1', api);

@@ -1,80 +1,113 @@
-var express = require('express');
-var router = express.Router();
+/**
+* @Author: tilpa
+* @Date:   2016-04-16T13:26:03+10:00
+* @Last modified by:   nxtonic
+* @Last modified time: 2016-04-19T01:57:02+10:00
+*/
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.send({response: 'success, you reached the api.'});
-});
+'use strict';
 
-router.post('/alpaca/new', function(req, res) {
-  // Set our internal DB variable
-  var db = req.db;
+// create application router
+var router = require('express').Router();
 
-  // Get our form values. These rely on the "name" attributes
-  var alpacaHerd = req.body.alpacaherd;
-  var alpacaName = req.body.alpacaname;
-  var alpacaType = req.body.alpacatype;
-  var alpacaSex = req.body.alpacasex;
-  var alpacaDob = req.body.alpacadob;
-  var alpacaStatus = req.body.alpacastatus;
-  var alpacaColour = req.body.alpacacolour;
+// import database models
+const Herd = require('../models/herd');
+const Animal = require('../models/animal');
 
-  // Set our collection
-  var collection = db.get('alpaca');
-
-  // Submit to the DB
-  collection.insert({
-      "herd" : alpacaHerd,
-      "name" : alpacaName,
-      "type" : alpacaType,
-      "sex" : alpacaSex,
-      "dob" : alpacaDob,
-      "status" : alpacaStatus,
-      "colour" : alpacaColour,
-
-  }, function (err, doc) {
-      if (err) {
-          // If it failed, return error
-          res.send("There was a problem adding the information to the database.");
-      }
-      else {
-          // And forward to success page
-          res.redirect("/alpacalist");
-      }
+// GET methods
+router.get('/', function (req, res, next) {
+  res.send({
+    status: res.statusCode,
+    response: 'Everything is AWESOME 😁 '
   });
 });
+router.get('/meta', function (req, res, next) {
+  res.json({
+    resources: router.stack
+  });
+});
+router.get('/dev/test', function (req, res, next) {
 
-router.post('/alpaca/remove/:name', function(req, res) {
-  var db = req.db;
-  var name = req.params.name;
+  var dad = new Animal({
+    name: 'Fred',
+    gender: 'M'
+  });
 
-  var collection = db.get('alpaca');
-  collection.remove({"name": name },
-    function (err, doc) {
-      if (err) {
-        res.send("Not sending")
-      }
-      else {
-        res.redirect("/alpacalist");
-      }
+  var mum = new Animal({
+    name: 'Sarah',
+    gender: 'F'
+  });
+
+  var child = new Animal({
+    name: 'Holly',
+    gender: 'F',
+    parents: {
+      sire: dad,
+      dam: mum
+    }
+  });
+
+  Herd.findOne({name: "Norfolk's Finest"}, function (err, res) {
+    if (err) return console.error(err);
+    console.log(res);
+  });
+
+  dad.save(function () {
+    mum.save(function () {
+      child.save();
     });
+  });
+
+  res.redirect('/api/v1/animals');
+
 });
+router.get('/dev/animal/create', function (req, res, next) {
 
-router.post('/alpaca/details/:name', function(req, res) {
-  var db = req.db;
-  var name = req.params.name;
+  var t = new Date('Aug 22, 1995');
 
-  var collection = db.get('alpaca');
-  collection.find({"name" : name},
-    function (err, doc) {
-      if (err) {
-        res.send("Not Working")
-      }
-      else {
-        res.redirect("/alpacadescription")
-      }
-    })
+  var animal = new Animal({
+    name: 'Fred',
+    dob: t,
+    gender: 'M'
+  });
+
+  animal.save(function (err, animal) {
+    if (err) return console.error(err);
+  });
+
+  Animal.find(function (err, animals) {
+    if (err) return console.error(err);
+    res.send(animals);
+  });
+
 });
-
+router.get('/dev/herd/create', function (req, res, next) {
+  var herd = new Herd({
+    name: "Norfolk's Finest"
+  });
+  herd.save(function (err, herd) {
+    if (err) return console.error(err);
+  });
+  Herd.find(function (err, herds) {
+    if (err) return console.error(err);
+    return res.send(herds);
+  });
+});
+router.get('/dev/deleteAll', function (req, res, next) {
+  req.db.db.dropDatabase();
+  res.redirect('/api/v1/');
+});
+router.get('/animals', function (req, res, next) {
+  Animal.find(function (err, animals) {
+    if (err) return console.error(err);
+    res.send(animals);
+  });
+});
+router.get('/herds', function (req, res, next) {
+  Herd.find(function (err, herds) {
+    if (err) return console.error(err);
+    res.send(herds);
+  });
+});
 
 module.exports = router;

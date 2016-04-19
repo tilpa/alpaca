@@ -1,3 +1,8 @@
+# @Author: nxtonic
+# @Date:   2016-04-13T22:11:39+10:00
+# @Last modified by:   nxtonic
+# @Last modified time: 2016-04-19T01:28:46+10:00
+
 version: '2'
 services:
   web:
@@ -22,6 +27,7 @@ services:
     environment:
       SERVICE_NAME: db
       SERVICE_TAGS: database, v1
+      DATABASE_NAME: application
     expose:
       - "27017"
     networks:
