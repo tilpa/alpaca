@@ -33,7 +33,14 @@ block content
           td #{alpaca.colour}
           | 
           td
-            button.btn.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
-            button.btn.btn-info(onClick="ALPACA.detailsAlpaca('#{alpaca.name}')") More Info
-          
+            .btn-toolbar
+              button.btn.btn-info(onClick="ALPACA.detailsAlpaca('#{alpaca.name}')") Get Info
+              button.btn.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
+  if (alpacalist.length === 0)
+    .container
+      .row
+        .col-md-12
+          h1 There are no alpacas...yet
+          a(href="/newalpaca")
+            h3.text-muted Add one?
           

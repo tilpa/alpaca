@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 /* GET Alpacalist page. */
 router.get('/alpacalist', function(req, res) {
   var db = req.db;
-  var collection = db.get('alpaca');
+  var collection = db.find('alpaca');
   collection.find({}, {}, function(e, data) {
     res.render('alpacalist', {
       title: 'Alpaca List',

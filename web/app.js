@@ -1,41 +1,55 @@
-var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
+/**
+* @Author: tilpa
+* @Date:   2016-04-16T13:26:03+10:00
+* @Last modified by:   nxtonic
+* @Last modified time: 2016-04-17T18:39:02+10:00
+*/
 
-// New Code
-var mongo = require('mongodb');
-var monk = require('monk');
-var db = monk('localhost:27017/alpaca');
+'use strict';
 
+const express = require('express');
+const path = require('path');
+const favicon = require('serve-favicon');
+const logger = require('morgan');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+
+// establish connection to db.
+const mongoose = require('mongoose');
+var dbName = process.env.DATABASE_NAME || 'application';
+const db = mongoose.connection;
+mongoose.connect('mongodb://db/' + dbName);
+db.on('error', console.error.bind(console, 'connection error:'));
+
+// import routers
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
 
+// initialise application and add locals for templates.
 var app = express();
 app.locals.moment = require('moment');
 app.locals.ageCalculator = require("age-calculator");
 
-// view engine setup
+// configure view engine
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+app.set('view engine', 'pug');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+// configure general application middleware
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.set('json spaces', 2);
 
-// Make our db accessible to our router
+// Make db accessible to router
 app.use(function(req,res,next){
     req.db = db;
     next();
 });
 
+// attach routers to application
 app.use('/', routes);
 app.use('/users', users);
 app.use('/api/v1', api);
