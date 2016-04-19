@@ -21,7 +21,7 @@ router.get('/alpacalist', function(req, res) {
 });
 
 /* GET Add relations page. */
-router.get('/addrelations', function(req, res) {
+router.get('/addrelations/:name/', function(req, res) {
   var db = req.db;
   var collection = db.get('alpaca');
   collection.find({}, {}, function(e, data) {

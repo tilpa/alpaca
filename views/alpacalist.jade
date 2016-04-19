@@ -33,7 +33,8 @@ block content
           td #{alpaca.colour}
           | 
           td
-            button.btn.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
-            button.btn.btn-info(onClick="ALPACA.detailsAlpaca('#{alpaca.name}')") More Info
+            .btn-toolbar
+              button.btn.btn-sm.btn-primary(onClick="ALPACA.detailsAlpaca('#{alpaca.name}')") More Info
+              button.btn.btn-sm.btn-danger(onClick="ALPACA.deleteAlpaca('#{alpaca.name}')") Delete
           
           

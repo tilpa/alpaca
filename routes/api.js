@@ -24,23 +24,22 @@ router.post('/alpaca/new', function(req, res) {
 
   // Submit to the DB
   collection.insert({
-      "herd" : alpacaHerd,
-      "name" : alpacaName,
-      "type" : alpacaType,
-      "sex" : alpacaSex,
-      "dob" : alpacaDob,
-      "status" : alpacaStatus,
-      "colour" : alpacaColour,
+    "herd": alpacaHerd,
+    "name": alpacaName,
+    "type": alpacaType,
+    "sex": alpacaSex,
+    "dob": alpacaDob,
+    "status": alpacaStatus,
+    "colour": alpacaColour,
 
-  }, function (err, doc) {
-      if (err) {
-          // If it failed, return error
-          res.send("There was a problem adding the information to the database.");
-      }
-      else {
-          // And forward to success page
-          res.redirect("/alpacalist");
-      }
+  }, function(err, doc) {
+    if (err) {
+      // If it failed, return error
+      res.send("There was a problem adding the information to the database.");
+    } else {
+      // And forward to success page
+      res.redirect("/alpacalist");
+    }
   });
 });
 
@@ -49,12 +48,13 @@ router.post('/alpaca/remove/:name', function(req, res) {
   var name = req.params.name;
 
   var collection = db.get('alpaca');
-  collection.remove({"name": name },
-    function (err, doc) {
+  collection.remove({
+      "name": name
+    },
+    function(err, doc) {
       if (err) {
         res.send("Not sending")
-      }
-      else {
+      } else {
         res.redirect("/alpacalist");
       }
     });
@@ -65,16 +65,57 @@ router.post('/alpaca/details/:name', function(req, res) {
   var name = req.params.name;
 
   var collection = db.get('alpaca');
-  collection.find({"name" : name},
-    function (err, doc) {
+  collection.find({
+      "name": name
+    },
+    function(err, doc) {
       if (err) {
         res.send("Not Working")
-      }
-      else {
+      } else {
         res.redirect("/alpacadescription")
       }
     })
 });
 
+router.patch('/alpaca/relations/:action/:name', function(req, res) {
+  // Set our internal DB variable
+  var db = req.db;
+  var name = req.params.name;
+  var action = req.params.action;
+
+  // Get our form values. These rely on the "name" attributes
+  var alpacaSire = req.body.sire;
+  var alpacaDam = req.body.dam;
+
+  if (action == "add") {
+    // Set our collection
+    var collection = db.get('alpaca');
+
+    collection.update(
+      // query
+      {
+        "name": name
+      },
+      // update
+      {
+        "sire": alpacaSire,
+        "dam": alpacaDam,
+      },
+      function(err, doc) {
+        if (err) {
+          res.send("Not Working")
+        } else {
+          // And forward to success page
+          res.redirect("/alpacadesciption/" + name);
+        }
+      }
+    );
+  }
+
+  if (action == "remove") {
+
+  }
+
+});
 
 module.exports = router;

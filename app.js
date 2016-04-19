@@ -5,8 +5,8 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-// New Code
 var mongo = require('mongodb');
+var mongoose = require('mongodb');
 var monk = require('monk');
 var db = monk('localhost:27017/alpaca');
 
@@ -17,6 +17,7 @@ var api = require('./routes/api');
 var app = express();
 app.locals.moment = require('moment');
 app.locals.ageCalculator = require("age-calculator");
+app.locals.pretty = true;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
