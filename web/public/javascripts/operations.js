@@ -21,3 +21,22 @@ var ALPACA = {
     window.location.href="/alpacadescription/" + name + "/";
   }
 }
+
+function formNewAlpaca() {
+  var formData = JSON.stringify($("#formAddAlpaca").serializeArray());
+
+  $.ajax({
+  type: "POST",
+  url: "api/v1/alpaca/new",
+  data: formData,
+  success: function(){},
+  dataType: "json",
+  contentType : "application/json"
+  });
+}
+
+$('#dobpicker.input-group.date').datepicker({
+    format: "dd/mm/yyyy",
+    startView: 2,
+    todayBtn: true,
+});

@@ -4,7 +4,7 @@ block content
   .jumbotron
     h1= title
   .col-md-6
-    form#formAddUser(name="adduser",method="post",action="/api/v1/alpaca/new")
+    form#formAddAlpaca(name="addalpaca",method="post",action="formNewAlpaca()")
       .form-group
         label Herd
         select.form-control(name="alpacaherd")
